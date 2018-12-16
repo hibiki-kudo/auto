@@ -11,7 +11,7 @@ from selenium.webdriver.common.keys import Keys
 BASE_URI = "https://twitter.com/{user_name}/followers"
 
 # ウェブドライバーのディレクトリをexecutable_pathのところに設定してください
-driver = webdriver.Firefox(executable_path="geckodriver")
+driver = webdriver.Firefox(executable_path="./geckodriver")
 
 users = []
 
@@ -35,8 +35,14 @@ def login(user_name="", password="", email=""):
 
 def scroll_pages(length):
     for i in range(length):
-        driver.execute_script(f"window.scrollTo({i}, document.body.scrollHeight);")
-        sleep(1)
+        before_html = driver.page_source
+        driver.execute_script(f"window.scrollTo({i+1}, document.body.scrollHeight);")
+        sleep(2)
+
+        if len(before_html) == len(driver.page_source):
+            print(len(before_html))
+            print(len(driver.page_source))
+            break
 
 
 def open_page(user_name):
@@ -87,11 +93,11 @@ def main():
     password = "Kudo9712"
     email = "08062909205"
 
-    scrape_user = "sayaendo26"
+    scrape_user = "ariyoshihiroiki"
 
     login(user_name=user_name, password=password, email=email)
     length = open_page(scrape_user)
-    scroll_pages(length // 9)  # 1あたり6人読み込み
+    scroll_pages(length // 10)  # 1あたり6人読み込み
     scrape_users()
     driver.close()
     save_csv()
