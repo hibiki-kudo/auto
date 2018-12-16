@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from search import TwitterSearch
 
 # ウェブドライバーのディレクトリをexecutable_pathのところに設定してください
-driver = webdriver.Firefox(executable_path="/Users/kudouhibiki/Desktop/python_program/twitter_scraping/geckodriver")
+driver = webdriver.Firefox(executable_path="geckodriver")
 
 
 # ツイッターログイン関数
