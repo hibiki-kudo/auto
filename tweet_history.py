@@ -5,7 +5,7 @@ import pandas as pd
 from search import TwitterSearch
 
 if __name__ == "__main__":
-    query = "taka8rie"  # 抜き取るユーザーネーム
+    query = ""  # 抜き取るユーザーネーム
 
     twitter = TwitterSearch()
     twitter.search(f"from:{query}")
