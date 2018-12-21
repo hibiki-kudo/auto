@@ -84,20 +84,24 @@ def scrape_users():
 
 
 def save_csv():
+    global scrape_user
     df = pd.DataFrame(users, columns=['name', 'profile_message', 'url'])
-    df.to_csv("followers_info.csv")
+    df.to_csv(f"{scrape_user}_followers_info.csv")
 
 
 def main():
-    user_name = "hibikikkk_9712"
-    password = "Kudo9712"
-    email = "08062909205"
+    global scrape_user
+    # ログインしないとユーザのフォロワ見れないのでログイン用
+    user_name = ""
+    password = ""
+    email = ""
 
-    scrape_user = "ariyoshihiroiki"
+    # 抜き取るユーザのnameを入力
+    scrape_user = ""
 
     login(user_name=user_name, password=password, email=email)
     length = open_page(scrape_user)
-    scroll_pages(length // 10)  # 1あたり6人読み込み
+    scroll_pages(length // 10)  # フォロワー1人あたり6人読み込みだけど10で割ったほうがちょうど良さげ
     scrape_users()
     driver.close()
     save_csv()

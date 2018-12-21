@@ -50,11 +50,13 @@ class TwitterSearch:
 
             self.tweets = list(Tweet.from_html(html.json()["items_html"]))
             self.pos = html.json()["min_position"]
-            print(self.tweets)
+            if len(self.tweets) == 0:
+                raise IndexError
             return
 
         except:
             print("これ以上見つけられないよ")
+            raise AssertionError
             return
 
 
