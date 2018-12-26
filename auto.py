@@ -53,10 +53,10 @@ def follow(screen_name=""):
 
 
 def main():
-    user_name = "hibi_no_poem"  # ログインするときに入力するユーザーネーム
-    password = "Kudo9712"  # ログインするときに入力するパスワード
-    email = "hibi_no_poem@yahoo.co.jp"  # 乗っ取りと判断された際の対策用
-    query = "懸賞 OR  応募 exclude:replies min_retweets:100 since:2018-12-20 until:2018-12-21"  # 検索内容
+    user_name = ""  # ログインするときに入力するユーザーネーム
+    password = ""  # ログインするときに入力するパスワード
+    email = ""  # 乗っ取りと判断された際の対策用
+    query = ""  # 検索内容
 
     # ログイン処理
     login(user_name=user_name, password=password, email=email)
