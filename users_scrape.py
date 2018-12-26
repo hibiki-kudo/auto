@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+from profile_morphological_analysis import analysis
+
 BASE_URI = "https://twitter.com/{user_name}/followers"
 
 # ウェブドライバーのディレクトリをexecutable_pathのところに設定してください
@@ -34,15 +36,21 @@ def login(user_name="", password="", email=""):
 
 
 def scroll_pages(length):
-    for i in range(length):
-        before_html = driver.page_source
-        driver.execute_script(f"window.scrollTo({i+1}, document.body.scrollHeight);")
-        sleep(2)
+    try:
+        for i in range(length):
+            before_html = driver.page_source
+            driver.execute_script(f"window.scrollTo({i+1}, document.body.scrollHeight);")
+            sleep(2)
 
-        if len(before_html) == len(driver.page_source):
-            print(len(before_html))
-            print(len(driver.page_source))
-            break
+            if len(before_html) == len(driver.page_source):
+                print(len(before_html))
+                print(len(driver.page_source))
+                break
+
+    except:
+        scrape_users()
+        driver.close()
+        save_csv()
 
 
 def open_page(user_name):
@@ -56,6 +64,10 @@ def scrape_users():
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
     for user in soup.find_all("div", attrs={"class": "ProfileCard-userFields"}):
+        '''
+        コメントアウトしている部分はrequestsモジュールで完全なプロフィール欄を抜き取ることができる。
+        ただこっちはユーザ毎にリクエストを出すため、サーバに掛かる負荷が大きい。そのため、小休止を毎回入れるとすごい時間がかかるためおすすめはしない。
+        '''
         # sleep(2)
         # profile = requests.get(f"https://twitter.com/" + user.find("b", attrs={"class": "u-linkComplex-target"}).text.replace("\n",'').replace("Follows you", "").replace(" ", "") + "/")
         # profile_text = BeautifulSoup(profile.text,"html.parser").find("p",attrs={"class":"ProfileHeaderCard-bio u-dir"}).text
@@ -65,6 +77,7 @@ def scrape_users():
         # print("@"+user.find("div", attrs={"class": "ProfileNameTruncated account-group"}).text.replace("\n", "").replace(" ",""))
         # print(profile_text)
         # print(profile.url)
+
         user_name = user.find("div", attrs={"class": "ProfileNameTruncated account-group"}).text.replace("\n",
                                                                                                          "").replace(
             " ", "")
@@ -89,6 +102,12 @@ def save_csv():
     df.to_csv(f"{scrape_user}_followers_info.csv")
 
 
+def finish_process():
+    scrape_users()
+    driver.close()
+    save_csv()
+
+
 def main():
     global scrape_user
     # ログインしないとユーザのフォロワ見れないのでログイン用
@@ -100,11 +119,11 @@ def main():
     scrape_user = ""
 
     login(user_name=user_name, password=password, email=email)
-    length = open_page(scrape_user)
+    length = open_page(scrape_user)  # 今は全フォロワーを取得するよう設定中
+    # length = 500  # ここの数字を変えてコメントアウトでなくすれば人数調整可能
     scroll_pages(length // 10)  # フォロワー1人あたり6人読み込みだけど10で割ったほうがちょうど良さげ
-    scrape_users()
-    driver.close()
-    save_csv()
+    finish_process()
+    analysis(scrape_user)
 
 
 if __name__ == "__main__":
