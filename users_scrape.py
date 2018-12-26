@@ -120,7 +120,7 @@ def main():
 
     login(user_name=user_name, password=password, email=email)
     length = open_page(scrape_user)  # 今は全フォロワーを取得するよう設定中
-    length = 100  # ここの数字を変えてコメントアウトでなくすれば人数調整可能
+    # length = 100  # ここの数字を変えてコードに加えることで人数調整可能
     scroll_pages(length // 10)  # フォロワー1人あたり6人読み込みだけど10で割ったほうがちょうど良さげ
     finish_process()
     analysis(scrape_user)
