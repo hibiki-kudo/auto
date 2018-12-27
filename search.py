@@ -52,6 +52,7 @@ class TwitterSearch:
             self.pos = html.json()["min_position"]
             if len(self.tweets) == 0:
                 raise IndexError
+            print(self.tweets)
             return
 
         except:
@@ -72,12 +73,12 @@ if __name__ == "__main__":
         print(tweet.text)
         counter += 1
 
-    # counter = 1
-    # for i in range(5):
-    #     twitter.scroll()
-    #     for tweet in twitter.tweets:
-    #         print(f"================================{counter}回目=========================")
-    #         print(tweet.user)
-    #         print(tweet.icon)
-    #         print(tweet.text)
-    #         counter += 1
+    counter = 1
+    for i in range(5):
+        twitter.scroll()
+        for tweet in twitter.tweets:
+            print(f"================================{counter}回目=========================")
+            print(tweet.user)
+            print(tweet.icon)
+            print(tweet.text)
+            counter += 1
