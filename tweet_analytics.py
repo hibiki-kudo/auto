@@ -45,6 +45,7 @@ def login():
 def scroll_pages():
     global driver
     driver.get(f"https://analytics.twitter.com/user/{user_name}/tweets")
+    sleep(2)
     try:
         for i in range(tweets_num // 10):  # ここの10はなんとなく
             before_html = driver.page_source
