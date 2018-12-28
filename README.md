@@ -13,7 +13,7 @@
 ## description
 ### auto.py
 ツイッター上の検索をして自動ファボ、リツイート、フォローを行う
-### profile_morphological_analysis.py
+### morphological_analysis.py
 単語の出現頻度を求めて、csv形式で結果を出力する
 ##search.py
 ツイッター検索と検索ページのスクロールをする
