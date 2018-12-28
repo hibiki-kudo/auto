@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from profile_morphological_analysis import analysis
+from morphological_analysis import analysis
 
 BASE_URI = "https://twitter.com/{user_name}/followers"
 
@@ -99,7 +99,7 @@ def scrape_users():
 def save_csv():
     global scrape_user
     df = pd.DataFrame(users, columns=['name', 'profile_message', 'url'])
-    df.to_csv(f"{scrape_user}_followers_info.csv")
+    df.to_csv(f"./csvファイル/{scrape_user}_followers_info.csv")
 
 
 def finish_process():

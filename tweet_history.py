@@ -27,4 +27,4 @@ if __name__ == "__main__":
             break
 
     df = pd.DataFrame(csv_info, columns=["screen_name", "name", "text", "timestamp"])  # 取得情報は
-    df.to_csv(f"{query}'s_tweet_info.csv")  # 保存するcsvファイル名
+    df.to_csv(f"./csvファイル/{query}'s_tweet_info.csv")  # 保存するcsvファイル名

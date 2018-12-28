@@ -45,14 +45,18 @@ def ranking(words):
     return words_ranking
 
 
+def save_csv(user_name, words):
+    df = pd.DataFrame(words[:500:], columns=["単語", "回数", "割合"])
+    df.to_csv(f"./csvファイル/{user_name}_analysis.csv")
+
+
 def analysis(user_name):
     file_name = f"{user_name}_followers_info.csv"
     profile_text = " ".join([str(a) for a in pd.read_csv(file_name)["profile_message"]])
     words = mecab_list(profile_text)
     words_rank = ranking(words)
 
-    df = pd.DataFrame(words_rank[:500:], columns=["単語", "回数", "割合"])
-    df.to_csv(f"{user_name}_analysis.csv")
+    save_csv(user_name, words_rank)
 
 
 if __name__ == "__main__":
@@ -63,4 +67,4 @@ if __name__ == "__main__":
     words_rank = ranking(words)
 
     df = pd.DataFrame(words_rank[:500:], columns=["単語", "回数", "割合"])
-    df.to_csv(f"{file_name[:-19]}_analysis.csv")
+    df.to_csv(f"./csvファイル/{file_name[:-19]}_analysis.csv")

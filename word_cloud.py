@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from wordcloud import WordCloud
 
-from profile_morphological_analysis import *
+from morphological_analysis import *
 from search import TwitterSearch
 
 
@@ -31,7 +31,7 @@ def tweet_collect(twitter):
 
 def create_wordcloud(text, file_name):
     fpath = "/System/Library/Fonts/ヒラギノ丸ゴ ProN W4.ttc"
-    mask = np.array(Image.open("クローバー.jpg"))
+    mask = np.array(Image.open("./シルエット画像/クローバー.jpg"))
 
     # ストップワードの設定
     stop_words = ["https", "twitter", "status", "pic", "com", "www", "ーーーー", " "]
@@ -42,7 +42,7 @@ def create_wordcloud(text, file_name):
     plt.figure(figsize=(15, 12))
     plt.imshow(word_cloud)
     plt.axis("off")
-    plt.savefig(file_name)
+    plt.savefig("./ワードクラウド結果画像/" + file_name)
 
 
 def main():
@@ -56,7 +56,7 @@ def main():
     words = mecab_list(" ".join(csv_info))
     csv_info = ranking(words)
     df = pd.DataFrame(csv_info, columns=["単語", "回数", "確率"])
-    df.to_csv(f"{user_name}_word_cloud.csv")
+    df.to_csv(f"./csvファイル/{user_name}_word_cloud.csv")
     create_wordcloud(",".join([a[0] for a in words]), f"{user_name}_word_cloud.png")
 
 
