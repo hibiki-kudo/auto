@@ -108,7 +108,6 @@ def select_range(file_path, save_file_name, reverse=True, top=100, bottom=0):
     :param reverse: 並び順(Trueならエンゲージ率の降順)
     :param top: エンゲージ率の範囲の最大(初期値 100%)
     :param bottom: エンゲージ率の範囲の最小(初期値 0%)
-    :return:
     '''
     file = pd.read_csv(file_path)
     csv_info = []
@@ -136,8 +135,8 @@ def select_range(file_path, save_file_name, reverse=True, top=100, bottom=0):
 
 def main():
     global driver
-    path = base_file_path + "my_analytics.csv"
-    if not os.path.exists(path):
+    path = "my_analytics.csv"
+    if not os.path.exists(base_file_path + path):
         # 毎回自分のアナリティクスから呼び出すのは負荷とか時間とか面倒になるので一度保存されたら削除されない限りここはパスする
         login()
         scroll_pages()
@@ -145,10 +144,10 @@ def main():
         driver.close()
         save_csv_tweet_analytics(csv_info, path)
 
-    sort_engagement_rate(path)
+    sort_engagement_rate(base_file_path + path)
 
     # 上位30件のツイートから単語出現頻度を求めてみる
-    select_range(file_path=path, save_file_name="top_30.csv", reverse=True, bottom=0.1)
+    select_range(file_path=base_file_path + path, save_file_name="top_30.csv", reverse=True, bottom=0.1)
     texts = pd.read_csv(base_file_path + "top_30.csv")["テキスト"][:30:].tolist()
     texts = mecab_list(" ".join(texts))
     texts = ranking(texts)

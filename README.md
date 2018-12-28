@@ -10,7 +10,7 @@
 - pillow
 - requests
 - pandas
-## usage
+## description
 ### auto.py
 ツイッター上の検索をして自動ファボ、リツイート、フォローを行う
 ### profile_morphological_analysis.py
